@@ -1,3 +1,32 @@
+# Hacked for easy building on macOS 14.6.1 for UT Austin CS 371p
+
+My setup:
+
+- macOS 14.6.1
+- Xcode 15.4
+- gmp 6.3.0 installed via homebrew in /opt/homebrew
+
+To build, just run `make`. Then copy `checktestdata` to somewhere in your PATH.
+
+Changes to this repo:
+
+- Remove use of `-lstdc++fs` because it doesn't exist on macOS.
+
+- Add (and stop ignoring) `configure` and the outputs of `configure`.
+
+I generated `configure` using the following commands:
+
+```
+nix shell nixpkgs\#automake -c aclocal -I m4
+nix shell nixpkgs\#autoconf -c autoconf
+```
+
+Then I ran `configure` like this:
+
+```
+CXXFLAGS=-I/opt/homebrew/include LDFLAGS=-L/opt/homebrew/lib ./configure --disable-parsergeneration
+```
+
 # Checktestdata
 
 [![Build Status](https://img.shields.io/travis/DOMjudge/checktestdata.svg)](https://travis-ci.org/DOMjudge/checktestdata)
